@@ -25,11 +25,4 @@ This is a **Donation Campaign Website** designed to support underprivileged comm
    - Smooth animations for toggling FAQ answers.
    - Interactive donation slider with autoplay and navigation buttons.
 
-## Pages
-
-- **index.html**: The main donation page with a 3D slider and donation form.
-- **transaction.html**: Displays transaction details, referral code, and progress.
-- **faq.html**: A FAQ page with 10 questions and answers.
-- **dashboard.html**: (Placeholder) A dashboard for tracking donations and activities.
-- **review.html**: (Placeholder) A page for user reviews and feedback.
 
