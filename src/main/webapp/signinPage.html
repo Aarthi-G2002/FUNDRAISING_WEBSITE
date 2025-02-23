@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a1931;
+        }
+        .container {
+            width: 450px;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+			font-size: 18px;
+            width: 70%;
+            padding: 10px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background: #219150;
+        }
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: blue;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 id="formTitle">Sign Up</h2>
+
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="password" id="password" placeholder="Enter Password">
+        <input type="password" id="repassword" placeholder="Re-enter Password">
+        <input type="text" id="phone" placeholder="Enter Phone Number">
+        <input type="email" id="email" placeholder="Enter Email">
+
+        <button class="btn" onclick="handleSubmit()">Sign Up</button>
+        <button class="toggle-btn" onclick="toggleForm()">Already have an account? Login</button>
+    </div>
+
+    <script>
+        let isLogin = false; 
+
+        function toggleForm() {
+            isLogin = !isLogin;
+            document.getElementById("formTitle").innerText = isLogin ? "Login" : "Sign Up";
+
+           
+            document.getElementById("phone").style.display = isLogin ? "none" : "block";
+            document.getElementById("email").style.display = isLogin ? "none" : "block";
+
+            document.querySelector(".btn").innerText = isLogin ? "Login" : "Sign Up";
+            document.querySelector(".toggle-btn").innerText = isLogin ? "New user? Sign Up" : "Already have an account? Login";
+        }
+
+        function handleSubmit() {
+            let name = document.getElementById("name").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let repassword = document.getElementById("repassword").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let email = document.getElementById("email").value.trim();
+
+            if (name === "" || password === "") {
+                alert("Name and Password are required!");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            if (!isLogin) {
+                // Sign Up
+                if (repassword !== password) {
+                    alert("Passwords do not match!");
+                    return;
+                }
+                if (users.find(user => user.name === name)) {
+                    alert("Username already taken. Choose a different name!");
+                    return;
+                }
+
+                users.push({ name, password, phone, email });
+                localStorage.setItem("users", JSON.stringify(users));
+                alert("Sign Up Successful! Please log in.");
+                toggleForm();
+
+            } else {
+                
+                let user = users.find(user => user.name === name && user.password === password);
+                if (user) {
+                    localStorage.setItem("loggedInUser", JSON.stringify(user));
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert("Invalid username or password!");
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

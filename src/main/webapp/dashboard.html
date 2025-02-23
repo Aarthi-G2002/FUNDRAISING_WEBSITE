@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        .bg-image {
+            height: 100vh;
+            width: 100%;
+            background: url('image/child1.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        /* Sidebar Menu */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Initially hidden */
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding-top: 60px;
+           
+            transition: 0.3s;
+            z-index: 999;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 35px 60px;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        /* Content Box */
+        .content-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            margin-top: 150px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            width: 850px;
+        }
+        h2 {
+            color: black;
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+    /* Background Image */
+    .bg-image {
+        background-position: center;
+        background-size: cover;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 200px; /* Smaller sidebar for mobile */
+        left: -200px; /* Initially hidden */
+    }
+
+    .sidebar a {
+        padding: 20px 30px;
+        font-size: 16px;
+    }
+
+    /* Menu Button */
+    .menu-btn {
+        font-size: 24px;
+        top: 15px;
+        left: 15px;
+    }
+
+    /* Content Box */
+    .content-box {
+        width: 90%; 
+        padding: 20px;
+        margin-top: 160px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px; /* Smaller text */
+    }
+}
+
+    </style>
+</head>
+<body>
+
+   
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+   
+    <div class="sidebar" id="sidebar">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="functunality.html">Functunality</a>
+        <a href="donation.html">Donation</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="questions.html">FAQ</a>
+    </div>
+
+    <div class="bg-image">
+        <div class="content-box">
+            <h2>Welcome, <span id="username">User</span>!</h2>
+            <p>Join us in making a difference! Raise funds and support noble causes.</p>
+            <p>Share your referral link and encourage more donations.</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            let sidebar = document.getElementById("sidebar");
+            if (sidebar.style.left === "0px") {
+                sidebar.style.left = "-250px";
+            } else {
+                sidebar.style.left = "0px";
+            }
+        }
+
+        let loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+        if (!loggedInUser) {
+            window.location.href = "signinPage.html"; // Redirect if not logged in
+        } else {
+            document.getElementById("username").innerText = loggedInUser.name;
+        }
+    </script>
+
+</body>
+</html>

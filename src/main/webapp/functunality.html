@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transactions</title>
+  <style>
+   
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0a1931;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+ .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 1000;
+        }
+       
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Initially hidden */
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding-top: 60px;
+           
+            transition: 0.3s;
+            z-index: 999;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 35px 60px;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    
+     .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+    
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 70px;
+      max-width: 1200px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 40px;
+      color: indianred;
+    }
+
+   
+    .progress-container {
+      background: #222;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background: linear-gradient(90deg, #1abc9c, #16a085);
+      width: 10%;
+      border-radius: 20px;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    
+    .star {
+      font-size: 50px;
+      color: #ffd700;
+      animation: spin 2s infinite linear, scaleUp 1s infinite alternate;
+    }
+
+    @keyframes spin {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(1); }
+      to { transform: scale(1.2); }
+    }
+
+   
+    .referral-code {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 10px;
+      border-radius: 15px;
+      margin: 20px 0;
+      font-size: 18px;
+      font-weight: bold;
+      color: #f1c40f;
+    }
+
+    
+    .time-left {
+      font-size: 18px;
+      color: #e74c3c;
+      font-weight: bold;
+      margin: 10px 0;
+      animation: blink 1s infinite alternate;
+    }
+
+    @keyframes blink {
+      from { opacity: 1; }
+      to { opacity: 0.6; }
+    }
+
+    
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      background: #1abc9c;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .button:hover {
+      background: #16a085;
+      transform: scale(1.05);
+    }
+
+    .whatsapp-button {
+      background: #25d366;
+    }
+
+    .whatsapp-button:hover {
+      background: #128c7e;
+    }
+    @media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow-x: hidden;
+    }
+
+    .menu-btn {
+        font-size: 26px;
+        top: 15px;
+        left: 15px;
+    }
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .sidebar a {
+        padding: 20px 30px;
+        font-size: 16px;
+    }
+
+    .container {
+        max-width: 90%;
+        padding: 40px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .progress-container {
+        width: 100%;
+        height: 15px;
+        border-radius: 15px;
+    }
+
+    .progress-bar {
+        height: 15px;
+        width: 10%;
+    }
+
+    .progress-text {
+        font-size: 12px;
+    }
+
+    .star {
+        font-size: 40px;
+    }
+
+    .referral-code {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .time-left {
+        font-size: 16px;
+    }
+
+    .button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .whatsapp-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+  </style>
+</head>
+<body>
+
+  
+   <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+    
+    <div class="sidebar" id="sidebar">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="functunality.html">Functunality</a>
+        <a href="donation.html">Donation</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="questions.html">FAQ</a>
+    </div>
+
+
+  <div class="container">
+    <h1>Transactions</h1>
+
+    
+    <div class="progress-container">
+      <div class="progress-bar" style="width: 10%;"></div>
+      <div class="progress-text">10 / 3000</div>
+    </div>
+
+   
+    <div class="star">⭐</div>
+
+    
+    <div class="referral-code" id="referralCode">REF12345</div>
+
+   
+    <div class="time-left" id="timeLeft">Time Left: 2 days</div>
+
+    
+    <button class="button" onclick="copyDonationLink()">Copy Donation Link</button>
+    <button class="button whatsapp-button" onclick="shareOnWhatsApp()">Share on WhatsApp</button>
+  </div>
+
+  <script>
+      function toggleMenu() {
+            let sidebar = document.getElementById("sidebar");
+            if (sidebar.style.left === "0px") {
+                sidebar.style.left = "-250px";
+            } else {
+                sidebar.style.left = "0px";
+            }
+        }
+
+
+    
+function copyDonationLink() {
+  const referralCode = document.getElementById('referralCode').innerText;
+  const donationLink = `https://example.com/donate?ref=${referralCode}`;
+
+  navigator.clipboard.writeText(donationLink)
+    .then(() => alert('Donation link copied to clipboard!'))
+    .catch(() => alert('Failed to copy link.'));
+}
+
+
+function shareOnWhatsApp() {
+  const referralCode = document.getElementById('referralCode').innerText;
+  const donationLink = `https://example.com/donate?ref=${referralCode}`;
+  
+  const message = `Hi, I am raising funds for an NGO dedicated to supporting underprivileged communities. Your small contribution can make a big difference in someone's life. The funds will be used to provide essential resources like food, education, and medical aid. Every donation, no matter how small, brings hope to those in need. By supporting this cause, you are helping create a better future for many people. Imagine the joy of a child receiving education because of your kindness. Your generosity can bring a smile to someone's face. Together, we can build a more compassionate world. Please take a moment to donate and spread the word. Let’s make a meaningful impact and change lives for the better!`;
+  
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, '_blank');
+}
+
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donation Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <style>
+  
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0a1931;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 46px;
+      margin-bottom: 90px;
+      color: indianred	;
+       }
+   .menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 1000;
+        }
+       
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Initially hidden */
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding-top: 60px;
+           
+            transition: 0.3s;
+            z-index: 999;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 35px 60px;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+    
+    .donation-slider {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      perspective: 1000px;
+      margin: 0 auto;
+    }
+
+    .donation-slider .slick-list {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      transform-style: preserve-3d;
+    }
+
+    .donation-slider .slick-track {
+      position: relative;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+    .donation-box {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 50px;
+      border-radius: 15px;
+      text-align: center;
+      margin: 0 15px;
+      width: 300px;
+      transform: scale(0.9);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 0.7;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .donation-box.slick-center {
+      transform: scale(1.1);
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .donation-box img {
+      width: 100%;
+      height: 180px;
+      border-radius: 10px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .donation-box:hover img {
+      transform: scale(1.1);
+    }
+
+    .donation-box h2 {
+      font-size: 24px;
+      margin-top: 15px;
+      color: black;  }
+
+    .donation-box p {
+      font-size: 14px;
+      margin: 10px 0;
+      color: #ddd;
+    }
+
+    .donation-box h3 {
+      font-size: 20px;
+      margin: 10px 0;
+      color: #1abc9c;
+    }
+
+    .donation-box .donate-btn {
+      background: indianred;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .donation-box .donate-btn:hover {
+      background: #16a085;
+      transform: scale(1.05);
+    }
+
+    
+    .slick-prev,
+    .slick-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      z-index: 1;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .slick-prev:hover,
+    .slick-next:hover {
+      background: rgba(255, 255, 255, 1);
+    }
+
+    .slick-prev {
+      left: -50px;
+    }
+
+    .slick-next {
+      right: -50px;
+    }
+
+    .slick-prev::before,
+    .slick-next::before {
+      font-family: 'Arial', sans-serif;
+      font-size: 34px;
+      color: black;
+      }
+
+    .slick-prev::before {
+      content: '←';
+    }
+
+    .slick-next::before {
+      content: '→';
+    }
+
+    
+    .donation-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+      width: 300px;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .donation-popup input {
+      width: 70%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .donation-popup .submit-btn {
+      background: #1abc9c;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .donation-popup .submit-btn:hover {
+      background: #16a085;
+      transform: scale(1.05);
+    }
+
+   
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: red;
+    }
+
+   
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+    }
+    @media (max-width: 768px) {
+    body {
+        text-align: center;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 85%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 50px;
+    }
+
+    .menu-btn {
+        font-size: 26px;
+        top: 15px;
+        left: 15px;
+    }
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .sidebar a {
+        padding: 20px 30px;
+        font-size: 16px;
+    }
+
+    .donation-slider {
+        height: auto;
+        padding: 10px;
+    }
+
+    .donation-box {
+        width: 90%;
+        padding: 30px;
+        margin: 10px auto;
+    }
+
+    .donation-box img {
+        height: 150px;
+    }
+
+    .donation-box h2 {
+        font-size: 20px;
+    }
+
+    .donation-box p {
+        font-size: 14px;
+    }
+
+    .donation-box h3 {
+        font-size: 18px;
+    }
+
+    .donation-box .donate-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .slick-prev,
+    .slick-next {
+        width: 30px;
+        height: 30px;
+    }
+
+    .slick-prev::before,
+    .slick-next::before {
+        font-size: 28px;
+    }
+
+    .slick-prev {
+        left: -30px;
+    }
+
+    .slick-next {
+        right: -30px;
+    }
+
+    .donation-popup {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .donation-popup input {
+        width: 90%;
+        padding: 8px;
+    }
+
+    .donation-popup .submit-btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .close-btn {
+        font-size: 18px;
+    }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+   
+    <div class="sidebar" id="sidebar">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="functunality.html">Functunality</a>
+        <a href="donation.html">Donation</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="questions.html">FAQ</a>
+    </div>
+
+
+  <div class="container">
+    <h1>Support Our Causes</h1>
+
+    
+    <div class="donation-slider">
+     
+      <div class="donation-box">
+        <img src="image/child1.jpg" alt="Child Education">
+        <h2>Child Education</h2>
+        <p>Help provide education for underprivileged children. Your donation funds school fees, books, and supplies.</p>
+        <h3>₹500</h3>
+        <button class="donate-btn" data-amount="500">Donate</button>
+      </div>
+
+      <div class="donation-box">
+        <img src="image/child2.jpg" alt="Food for Poor">
+        <h2>Food for the Poor</h2>
+        <p>Support our mission to feed the hungry by donating to provide nutritious meals for struggling families.</p>
+        <h3>₹300</h3>
+        <button class="donate-btn" data-amount="300">Donate</button>
+      </div>
+
+      <div class="donation-box">
+        <img src="image/child3.jpg" alt="Medical Help">
+        <h2>Medical Assistance</h2>
+        <p>Fund medical treatment and emergency care for those in need. Every rupee helps save lives.</p>
+        <h3>₹1000</h3>
+        <button class="donate-btn" data-amount="1000">Donate</button>
+      </div>
+
+      <div class="donation-box">
+        <img src="image/child4.jpg" alt="Orphan Support">
+        <h2>Orphan Care</h2>
+        <p>Donate to provide shelter, food, and education to orphaned children and secure their future.</p>
+        <h3>₹800</h3>
+        <button class="donate-btn" data-amount="800">Donate</button>
+      </div>
+
+  
+  
+  <div class="donation-box">
+    <img src="image/child5.jpg" alt="Clean Water">
+    <h2>Clean Water</h2>
+    <p>Provide access to clean and safe drinking water for communities in need.</p>
+    <h3>₹600</h3>
+    <button class="donate-btn" data-amount="600">Donate</button>
+  </div>
+
+  <div class="donation-box">
+    <img src="image/child6.jpg" alt="Women Empowerment">
+    <h2>Women Empowerment</h2>
+    <p>Support initiatives that empower women through education, skills training, and employment opportunities.</p>
+    <h3>₹700</h3>
+    <button class="donate-btn" data-amount="700">Donate</button>
+  </div>
+
+  <div class="donation-box">
+    <img src="image/child7.jpg" alt="Elder Care">
+    <h2>Elder Care</h2>
+    <p>Help provide care and support for elderly individuals who lack resources and family support.</p>
+    <h3>₹400</h3>
+    <button class="donate-btn" data-amount="400">Donate</button>
+  </div>
+
+  <div class="donation-box">
+    <img src="image/child10.jpg" alt="Disaster Relief">
+    <h2>Disaster Relief</h2>
+    <p>Contribute to disaster relief efforts to provide immediate aid to affected communities.</p>
+    <h3>₹1200</h3>
+    <button class="donate-btn" data-amount="1200">Donate</button>
+  </div>
+
+  <div class="donation-box">
+    <img src="image/child8.jpg" alt="Environment Conservation">
+    <h2>Environment Conservation</h2>
+    <p>Support projects that protect the environment, promote sustainability, and combat climate change.</p>
+    <h3>₹900</h3>
+    <button class="donate-btn" data-amount="900">Donate</button>
+  </div>
+
+  <div class="donation-box">
+    <img src="image/child9.jpg" alt="Animal Welfare">
+    <h2>Animal Welfare</h2>
+    <p>Help rescue, shelter, and care for abandoned and abused animals.</p>
+    <h3>₹550</h3>
+    <button class="donate-btn" data-amount="550">Donate</button>
+  </div>
+</div>
+    
+    </div>
+  </div>
+
+ 
+  <div class="donation-popup" id="donationPopup">
+    <span class="close-btn" onclick="closePopup()">X</span>
+    <h2>Complete Your Donation</h2>
+    <input type="text" id="donorName" placeholder="Enter your name">
+    <input type="email" id="donorEmail" placeholder="Enter your email">
+    <input type="tel" id="donorPhone" placeholder="Enter your phone number">
+    <input type="text" id="refCode" placeholder="Reference Code">
+    <input type="text" id="donationAmount" placeholder="Amount" readonly>
+    <button class="submit-btn">Submit</button>
+  </div>
+
+
+  <div class="overlay" id="overlay"></div>
+
+  <script>
+	  
+	   function toggleMenu() {
+            let sidebar = document.getElementById("sidebar");
+            if (sidebar.style.left === "0px") {
+                sidebar.style.left = "-250px";
+            } else {
+                sidebar.style.left = "0px";
+            }
+        }
+    
+$(document).ready(function () {
+    $(".donation-slider").slick({
+        centerMode: true,
+        centerPadding: '60px',
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        arrows: true,
+        focusOnSelect: true,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    centerPadding: '40px',
+                }
+            }
+        ]
+    });
+});
+
+
+document.querySelectorAll(".donate-btn").forEach(button => {
+    button.addEventListener("click", function () {
+        let amount = this.getAttribute("data-amount");
+        document.getElementById("donationAmount").value = "₹" + amount;
+        document.getElementById("donationPopup").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+    });
+});
+
+
+function closePopup() {
+    document.getElementById("donationPopup").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+}
+
+
+document.querySelector(".submit-btn").addEventListener("click", function () {
+    
+    let donorName = document.getElementById("donorName").value.trim();
+    let donorEmail = document.getElementById("donorEmail").value.trim();
+    let donorPhone = document.getElementById("donorPhone").value.trim();
+    let refCode = document.getElementById("refCode").value.trim();
+    let donationAmount = document.getElementById("donationAmount").value;
+
+  
+    if (donorName === "" || donorEmail === "" || donorPhone === "" || refCode === "") {
+        alert("Please fill all fields before submitting.");
+        return;
+    }
+
+   
+    let donationData = {
+        name: donorName,
+        email: donorEmail,
+        phone: donorPhone,
+        ref: refCode,
+        amount: donationAmount
+    };
+
+   
+    let donations = JSON.parse(localStorage.getItem("donations")) || [];
+    donations.push(donationData); 
+
+   
+    localStorage.setItem("donations", JSON.stringify(donations));
+
+    
+    let messageBox = document.createElement("p");
+    messageBox.textContent = "Thank you for your donation!";
+    messageBox.style.color = "green";
+    messageBox.style.fontSize = "18px";
+    messageBox.style.marginTop = "10px";
+    document.querySelector(".donation-popup").appendChild(messageBox);
+
+   
+    document.getElementById("donorName").value = "";
+    document.getElementById("donorEmail").value = "";
+    document.getElementById("donorPhone").value = "";
+    document.getElementById("refCode").value = "";
+
+    
+    setTimeout(() => {
+        closePopup();
+    }, 2000);
+});
+
+  </script>
+
+</body>
+</html>

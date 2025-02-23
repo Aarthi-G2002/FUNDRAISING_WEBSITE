@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Records</title>
+    <style>
+      
+body {
+    font-family: 'Arial', sans-serif;
+    background: #0a1931;
+    margin: 0;
+    padding: 0;
+}
+
+
+.menu-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding-top: 60px;
+           
+            transition: 0.3s;
+            z-index: 999;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 35px 60px;
+            text-decoration: none;
+            font-size: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+.container {
+    max-width: 1000px;
+    margin: 80px auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+.container h2 
+{
+	font-size: 40px;
+	font-weight: bold;
+	color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 15px;
+    color: white;
+    border: 1px solid  rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+th {
+    background: indianred	;
+    color: white;
+    font-size: 16px;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    th, td {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+	
+	<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+   
+    <div class="sidebar" id="sidebar">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="functunality.html">Functunality</a>
+        <a href="donation.html">Donation</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="questions.html">FAQ</a>
+    </div>
+
+
+
+    <div class="container">
+        <h2>Donation Records</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Reference Code</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="donationTable">
+              
+            </tbody>
+        </table>
+       
+    </div>
+
+    <script>
+		
+		 function toggleMenu() {
+            let sidebar = document.getElementById("sidebar");
+            if (sidebar.style.left === "0px") {
+                sidebar.style.left = "-250px";
+            } else {
+                sidebar.style.left = "0px";
+            }
+        }
+       
+        let donations = JSON.parse(localStorage.getItem("donations")) || [];
+
+        let tableBody = document.getElementById("donationTable");
+
+        
+        donations.forEach(donation => {
+            let row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${donation.name}</td>
+                <td>${donation.email}</td>
+                <td>${donation.phone}</td>
+                <td>${donation.ref}</td>
+                <td>${donation.amount}</td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+
+      
+        
+    </script>
+
+</body>
+</html>
