@@ -25,4 +25,16 @@ This is a **Donation Campaign Website** designed to support underprivileged comm
    - Smooth animations for toggling FAQ answers.
    - Interactive donation slider with autoplay and navigation buttons.
 
+## Screenshots:
+### I have attached the screenshots below for reference.
 
+
+![Alt Text](page1.png)
+
+![Alt Text](page2.png)
+
+![Alt Text](page3.png)
+
+![Alt Text](page4.png)
+
+![Alt Text](page5.png)
