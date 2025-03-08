@@ -38,3 +38,9 @@ This is a **Donation Campaign Website** designed to support underprivileged comm
 ![Alt Text](page4.png)
 
 ![Alt Text](page5.png)
+
+![Alt Text](page6.png)
+
+![Alt Text](page7.png)
+
+![Alt Text](page8.png)
